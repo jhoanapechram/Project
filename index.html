@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -372,4 +373,146 @@ footer b{font-family:var(--display);font-weight:800;font-size:1.8rem;letter-spac
  <p class="sub" data-aos="fade-up">Toca el sobre y escríbeme unas palabras</p>
  <div class="env" id="env" data-aos="zoom-in" role="button" tabindex="0" aria-label="Abrir sobre">
   <div class="bk"></div>
-  <div class="ft"></div
+  <div class="ft"></div>
+  <div class="fl"></div>
+  <div class="seal"><svg viewBox="0 0 120 120"><use href="#hibiscus"/></svg></div>
+ </div>
+ <p class="tap" id="tap">Toca para abrir</p>
+ <div id="letter">
+  <div class="paper">
+   <small>DE:</small><input id="lFrom" maxlength="40" placeholder="Tu nombre">
+   <small>MENSAJE:</small><textarea id="lMsg" maxlength="600" placeholder="Feliz cumpleaños..."></textarea>
+  </div>
+  <div class="sendrow">
+   <button class="btn wa" id="sendWa">WhatsApp</button>
+   <button class="btn" id="sendMail">Correo</button>
+  </div>
+ </div>
+</section>
+
+<!-- ===== GALERÍA: aparición secuencial ===== -->
+<section>
+ <h2 data-aos="fade-up">Mi sesión</h2><div class="gold-line"></div>
+ <div class="grid">
+  <!-- TODO: Reemplaza estas imágenes con tus fotos -->
+  <div class="frame" data-aos="zoom-in" data-aos-delay="0"><img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?q=80&w=1887&auto=format&fit=crop" alt="Foto 1" loading="lazy"></div>
+  <div class="frame" data-aos="zoom-in" data-aos-delay="150"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop" alt="Foto 2" loading="lazy"></div>
+  <div class="frame" data-aos="zoom-in" data-aos-delay="300"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964&auto=format&fit=crop" alt="Foto 3" loading="lazy"></div>
+  <div class="frame" data-aos="zoom-in" data-aos-delay="450"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1888&auto=format&fit=crop" alt="Foto 4" loading="lazy"></div>
+  <div class="frame" data-aos="zoom-in" data-aos-delay="600"><img src="https://images.unsplash.com/photo-1554151228-14d9def656e4?q=80&w=1886&auto=format&fit=crop" alt="Foto 5" loading="lazy"></div>
+ </div>
+</section>
+
+<footer><b data-aos="zoom-in">¡TE ESPERAMOS!</b><p class="script" data-aos="fade-up">Nombre</p></footer>
+
+<script>
+/* ===== Musica generada (Web Audio): no necesita archivo externo ===== */
+const SYNTH=(()=>{let ac,g,tm,st=0,nx=0,paused=true;
+const ch=[[57,60,64],[53,57,60],[48,52,55],[55,59,62]],bs=[45,41,36,43],f=n=>440*2**((n-69)/12),D=.5;
+function nt(t,n,d,ty,v){const o=ac.createOscillator(),e=ac.createGain();o.type=ty;o.frequency.value=f(n);e.gain.setValueAtTime(0,t);e.gain.linearRampToValueAtTime(v,t+.01);e.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(e);e.connect(g);o.start(t);o.stop(t+d+.05)}
+function kick(t){const o=ac.createOscillator(),e=ac.createGain();o.frequency.setValueAtTime(150,t);o.frequency.exponentialRampToValueAtTime(40,t+.15);e.gain.setValueAtTime(.9,t);e.gain.exponentialRampToValueAtTime(.001,t+.25);o.connect(e);e.connect(g);o.start(t);o.stop(t+.3)}
+function hat(t,v){const b=ac.createBuffer(1,ac.sampleRate*.05,ac.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;
+ const s=ac.createBufferSource(),h=ac.createBiquadFilter(),e=ac.createGain();s.buffer=b;h.type='highpass';h.frequency.value=7000;e.gain.setValueAtTime(v,t);e.gain.exponentialRampToValueAtTime(.001,t+.05);s.connect(h);h.connect(e);e.connect(g);s.start(t)}
+function sched(){while(nx<ac.currentTime+.3){const i=st%16,bar=Math.floor(st/16)%4,c=ch[bar];
+ if(i%4==0)kick(nx);if(i%4==2)hat(nx,.25);else if(i%2==1)hat(nx,.08);
+ if([0,3,6,8,11,14].includes(i))nt(nx,bs[bar],.22,'sawtooth',.16);
+ if(i%2==0)nt(nx,c[(i/2)%3]+12,.3,'triangle',.11);
+ if(i==0)c.forEach(n=>nt(nx,n+12,1.8,'sine',.06));
+ nx+=60/116/4;st++}}
+return{get paused(){return paused},play(){if(!ac){ac=new (window.AudioContext||window.webkitAudioContext)();g=ac.createGain();g.gain.value=.5;g.connect(ac.destination)}
+ return ac.resume().then(()=>{paused=false;nx=ac.currentTime+.05;clearInterval(tm);tm=setInterval(sched,60)})},
+ pause(){paused=true;clearInterval(tm);if(ac)ac.suspend()}}})();
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+AOS.init({duration:900,once:true,offset:60,disable:false});
+
+/* ===== Puerta: abre, libera scroll e inicia música (gesto del usuario) ===== */
+const bgm=SYNTH,mbtn=document.getElementById('music');
+function setPlaying(p){mbtn.classList.toggle('playing',p);mbtn.setAttribute('aria-label',p?'Pausar música':'Reproducir música')}
+document.getElementById('openBtn').onclick=()=>{
+  document.getElementById('gate').classList.add('open');document.body.classList.remove('lock');
+  bgm.play().then(()=>setPlaying(true)).catch(()=>{}); /* si no hay audio válido, simplemente no suena */
+  setTimeout(()=>AOS.refresh(),400);
+};
+mbtn.onclick=()=>{ if(bgm.paused){bgm.play().then(()=>setPlaying(true)).catch(()=>{})}else{bgm.pause();setPlaying(false)} };
+
+/* ===== Parallax de flotantes ===== */
+const fl=[...document.querySelectorAll('.float')];let tk=false;
+addEventListener('scroll',()=>{if(!tk){tk=true;requestAnimationFrame(()=>{const y=scrollY;
+ fl.forEach(e=>{const s=+e.dataset.speed;e.style.transform=`translateY(${-y*s}px) rotate(${y*s*.15}deg)`});tk=false})}},{passive:true});
+
+/* ===== Brillos (glitter) que caen suavemente ===== */
+const cv=document.getElementById('glitter'),cx=cv.getContext('2d');let W,H,P=[];
+function size(){W=cv.width=innerWidth;H=cv.height=innerHeight}size();addEventListener('resize',size);
+for(let i=0;i<38;i++)P.push({x:Math.random(),y:Math.random(),r:Math.random()*2+.8,v:Math.random()*.25+.08,t:Math.random()*6});
+(function loop(){cx.clearRect(0,0,W,H);
+ P.forEach(p=>{p.y+=p.v/H*60;p.t+=.04;if(p.y>1)p.y=0;
+  const a=.35+.6*Math.abs(Math.sin(p.t));cx.globalAlpha=a;cx.fillStyle=p.r>2?'#fff':'#ee8fac';
+  cx.beginPath();const x=p.x*W,y=p.y*H,r=p.r*2;cx.moveTo(x,y-r);cx.lineTo(x+r*.3,y-r*.3);cx.lineTo(x+r,y);cx.lineTo(x+r*.3,y+r*.3);
+  cx.lineTo(x,y+r);cx.lineTo(x-r*.3,y+r*.3);cx.lineTo(x-r,y);cx.lineTo(x-r*.3,y-r*.3);cx.fill()});
+ requestAnimationFrame(loop)})();
+
+/* ===== Cuenta regresiva ===== TODO: fecha y hora del evento */
+const EVENT=new Date('2026-05-01T19:30:00'),z=n=>String(n).padStart(2,'0');
+function tick(){const t=EVENT-new Date();
+ if(t<=0){count.style.display='none';countMsg.textContent='¡Gracias por celebrar conmigo!';return}
+ d.textContent=z(Math.floor(t/864e5));h.textContent=z(Math.floor(t/36e5)%24);m.textContent=z(Math.floor(t/6e4)%60);s.textContent=z(Math.floor(t/1e3)%60)}
+tick();setInterval(tick,1000);
+</script>
+
+<script>
+/* ===== Confeti al abrir ===== */
+(function(){const c=document.getElementById('confetti'),x=c.getContext('2d');let P=[],run=false;
+ const col=['#ee8fac','#d9527f','#c9a24b','#fff','#c9c9d1','#6b0f2e'];
+ function burst(){c.width=innerWidth;c.height=innerHeight;
+  for(let i=0;i<150;i++){const a=Math.random()*Math.PI*2,v=Math.random()*11+5;
+   P.push({x:c.width/2,y:c.height*.55,vx:Math.cos(a)*v,vy:Math.sin(a)*v-7,r:Math.random()*6+3,c:col[i%6],rot:Math.random()*6,vr:Math.random()*.3-.15,l:1})}
+  if(!run){run=true;step()}}
+ function step(){x.clearRect(0,0,c.width,c.height);
+  P.forEach(p=>{p.vy+=.28;p.vx*=.99;p.x+=p.vx;p.y+=p.vy;p.rot+=p.vr;p.l-=.006;
+   x.save();x.globalAlpha=Math.max(p.l,0);x.translate(p.x,p.y);x.rotate(p.rot);x.fillStyle=p.c;x.fillRect(-p.r,-p.r/2,p.r*2,p.r);x.restore()});
+  P=P.filter(p=>p.l>0&&p.y<c.height+20);
+  if(P.length)requestAnimationFrame(step);else{run=false;x.clearRect(0,0,c.width,c.height)}}
+ document.getElementById('openBtn').addEventListener('click',()=>setTimeout(burst,250));window.burst=burst;
+})();
+/* ===== Galería: toca una foto para verla grande ===== */
+const lb=document.getElementById('lb');
+document.querySelectorAll('.frame').forEach(f=>f.onclick=()=>{lb.querySelector('img').src=f.querySelector('img').src;lb.classList.add('on')});
+lb.onclick=()=>lb.classList.remove('on');
+</script>
+<script>
+/* ===== Globos que suben ===== */
+(function(){const c=document.getElementById('balloons'),x=c.getContext('2d');let W,H;
+const col=['#ee8fac','#d9527f','#c9a24b','#f8d5df','#c9c9d1'];
+function rs(){W=c.width=innerWidth;H=c.height=innerHeight}rs();addEventListener('resize',rs);
+const B=Array.from({length:14},(_,i)=>({x:Math.random(),y:Math.random()*1.3,r:14+Math.random()*16,v:.0006+Math.random()*.0012,p:Math.random()*6,c:col[i%5]}));
+(function loop(){x.clearRect(0,0,W,H);B.forEach(b=>{b.y-=b.v;b.p+=.02;if(b.y<-.15){b.y=1.15;b.x=Math.random()}
+ const px=b.x*W+Math.sin(b.p)*14,py=b.y*H;x.globalAlpha=.55;
+ x.strokeStyle='#6b0f2e';x.lineWidth=1;x.beginPath();x.moveTo(px,py+b.r*1.3);x.quadraticCurveTo(px+8*Math.sin(b.p),py+b.r*2.6,px,py+b.r*3.6);x.stroke();
+ x.fillStyle=b.c;x.beginPath();x.ellipse(px,py,b.r,b.r*1.25,0,0,7);x.fill();
+ x.fillStyle='#fff';x.globalAlpha=.6;x.beginPath();x.ellipse(px-b.r*.35,py-b.r*.4,b.r*.2,b.r*.32,-.5,0,7);x.fill()});
+ requestAnimationFrame(loop)})()})();
+
+/* ===== Sobre y carta ===== */
+const OWNER='Nombre';            /* TODO: nombre de la cumpleañera */
+const WA_NUMBER='';              /* TODO: WhatsApp con lada, solo digitos. Ej: 5219991234567 */
+const MAIL='';                   /* TODO: correo de la cumpleañera */
+const env=document.getElementById('env'),letter=document.getElementById('letter'),tap=document.getElementById('tap');
+function toast(t){const e=document.getElementById('toast');e.textContent=t;e.classList.add('on');setTimeout(()=>e.classList.remove('on'),2600)}
+function toggleEnv(){const o=env.classList.toggle('open');letter.classList.toggle('on',o);tap.textContent=o?'Escribe tu carta':'Toca para abrir';
+ if(o)setTimeout(()=>document.getElementById('lFrom').focus({preventScroll:true}),500)}
+env.onclick=toggleEnv;env.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleEnv()}};
+function compose(){const n=lFrom.value.trim(),m=lMsg.value.trim();
+ if(!m){toast('Escribe tu mensaje primero');return null}
+ return `Para ${OWNER}\n\n${m}\n\n- ${n||'Un invitado'}`}
+function done(){toast('¡Carta enviada!');if(window.burst)burst()}
+sendWa.onclick=()=>{const t=compose();if(!t)return;
+ if(WA_NUMBER){open('https://wa.me/'+WA_NUMBER+'?text='+encodeURIComponent(t),'_blank');done()}
+ else if(navigator.share){navigator.share({text:t}).then(done).catch(()=>{})}
+ else{navigator.clipboard&&navigator.clipboard.writeText(t);toast('Mensaje copiado, pégalo en WhatsApp')}};
+sendMail.onclick=()=>{const t=compose();if(!t)return;
+ location.href='mailto:'+MAIL+'?subject='+encodeURIComponent('Felicidades '+OWNER+' 🎉')+'&body='+encodeURIComponent(t);done()};
+</script>
+</body>
+</html>
